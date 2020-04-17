@@ -10,12 +10,12 @@ using namespace std;
 //练习1
 int main()
 {
-	//cv::Mat srcMat = imread("E:\\rim.png", 0);
-	cv::Mat srcMat = imread("E:\\die_on_chip.png", 0);
+	cv::Mat srcMat = imread("E:\\rim.png", 0);
+	//cv::Mat srcMat = imread("E:\\die_on_chip.png", 0);
 	//cv::Mat srcMat = imread("E:\\topic1.jpg", 0);
 
-	//cv::Mat dspMat = imread("E:\\rim.png");
-	cv::Mat dspMat = imread("E:\\die_on_chip.png");
+	cv::Mat dspMat = imread("E:\\rim.png");
+	//cv::Mat dspMat = imread("E:\\die_on_chip.png");
 	//cv::Mat dspMat = imread("E:\\topic1.jpg");
 
 	cv::Mat binaryMat;
@@ -24,9 +24,9 @@ int main()
 	cv::Mat centrMat;
 	cv::Mat resultMat;
 	//二值化
-	cv::threshold(srcMat, binaryMat, 0, 255, THRESH_OTSU);//不取反
+	//cv::threshold(srcMat, binaryMat, 0, 255, THRESH_OTSU);//不取反
 	cv::Mat inversedMat = ~srcMat;
-	//cv::threshold(inversedMat, binaryMat, 150, 255, THRESH_OTSU);
+	cv::threshold(inversedMat, binaryMat, 150, 255, THRESH_OTSU);
 	//获得连通域
 
 	Mat kernel = getStructuringElement(MORPH_RECT, Size(7, 7));//element
@@ -43,9 +43,6 @@ int main()
 	{
 		//char num[10];
 		//sprintf_s(num, "%d", i);
-
-		
-
 		//得轮廓的最小外接四边形
 		RotatedRect rbox = minAreaRect(contours[i]);
 		//绘制轮廓及最小外接四边形
@@ -66,11 +63,7 @@ int main()
 		cout << "num=" << i << "矩形面积square area=" << square_area[i] << endl;
 	}
 
-	int font_face = cv::FONT_HERSHEY_COMPLEX;
-	double font_scale = 1.5;
-	int thickness = 1;
-	int baseline;
-	
+
 
 	int num_area[10];
 
@@ -87,21 +80,9 @@ int main()
 	std::vector<cv::Vec3b> colors(nComp);
 	colors[0] = cv::Vec3b(0, 0, 0);//背景黑色
 
-//绘制bounding box
-	for (int i = 1; i < nComp; i++)
-	{
-		Rect bndbox;
-		//左上角坐标
-		bndbox.x = statsMat.at<int>(i, 0);
-		bndbox.y = statsMat.at<int>(i, 1);
-		//宽和长
-		bndbox.width = statsMat.at<int>(i, 2);
-		bndbox.height = statsMat.at<int>(i, 3);
-		//绘制
-		rectangle(resultMat, bndbox, CV_RGB(255, 255, 255), 1, 8, 0);
-	}
 
-/*
+
+
 	//绘制bounding box
 	for (int i = 1; i < nComp; i++)
 	{
@@ -110,12 +91,11 @@ int main()
 		//连通域编号
 		int x = statsMat.at<int>(i, 0);
 		int y = statsMat.at<int>(i, 1);
-		cv::putText(dspMat, num, Point(x, y), font_face, 1, cv::Scalar(255, 0, 0), thickness, 8, 0);
 		//依次获取每个连通域的面积
 		num_area[i] = statsMat.at<int>(i, 4);
 		cout << "mum=" << i << " num_area=" << num_area[i] << endl;
 	}
-	*/
+	
 	//计算矩形度
 	int h = 0;
 	for (int k = 0; k < contours.size(); k++)
