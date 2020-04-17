@@ -1,5 +1,8 @@
 # Connected-Component
 opencv简单实践8：连通域特征（宽长比）
+
+
+
 findContours
 0.输入：8bit二值图1.输出：保存轮廓的向量2.寻找模式3.近似方法
 或
